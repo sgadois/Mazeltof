@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.m2dl.mobe.mazeltof.MainActivity;
@@ -17,8 +18,12 @@ public class WinActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_win);
 
-        TextView labelTemps = (TextView) findViewById(R.id.tempsMenu);
-        labelTemps.setText("Meilleur temps: " );
+        Bundle bundle = this.getIntent().getExtras();
+        if(bundle!=null){
+            TextView labelTemps = (TextView) findViewById(R.id.tempsMenu);
+            labelTemps.setText("Temps: " + bundle.getString("time"));
+        }
+
 
         ImageButton play = (ImageButton) findViewById(R.id.boutonRejouer);
         play.setOnClickListener(new View.OnClickListener() {

@@ -26,9 +26,6 @@ public class MainActivity extends AppCompatActivity {
             //Set du label du niveau
             TextView labelniveau = (TextView) findViewById(R.id.imglabel);
             labelniveau.setText("Niveau " + bundle.getInt("position"));
-            //Set du label du temps
-            //TextView labeltemps = (TextView) findViewById(R.id.temps);
-            //labeltemps.setText("Meilleur temps: " + );
         }
 
         ImageButton play = (ImageButton) findViewById(R.id.play);
