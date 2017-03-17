@@ -193,12 +193,12 @@ public class LabyrintheActivity extends AppCompatActivity {
                         mBallPos.y += mBallSpd.y;
 
                         //if ball is on border, don't move
-                        if (mBallPos.x > (mScrWidth - mBallView.r / 2))
+                       /* if (mBallPos.x > (mScrWidth - mBallView.r / 2))
                             mBallPos.x = (mScrWidth - mBallView.r / 2);
                         if (mBallPos.y > (mScrHeight - mBallView.r / 2))
                             mBallPos.y = (mScrHeight - mBallView.r / 2);
                         if (mBallPos.x < mBallView.r / 2) mBallPos.x = mBallView.r / 2;
-                        if (mBallPos.y < mBallView.r / 2) mBallPos.y = mBallView.r / 2;
+                        if (mBallPos.y < mBallView.r / 2) mBallPos.y = mBallView.r / 2;*/
 
                         //update ball class instance
                         mBallView.x = mBallPos.x;
