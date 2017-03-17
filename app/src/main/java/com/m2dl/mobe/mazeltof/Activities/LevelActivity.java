@@ -1,11 +1,8 @@
 package com.m2dl.mobe.mazeltof.Activities;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.net.Uri;
-import android.preference.PreferenceManager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -34,10 +31,15 @@ public class LevelActivity extends AppCompatActivity {
                                     int position, long id) {
                 Toast.makeText(LevelActivity.this, "" + position,
                         Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(LevelActivity.this, MainActivity.class);
-                intent.putExtra("img_position", imageAdapter.getIdResource(position));
-                intent.putExtra("position", (position+1));
-                startActivity(intent);
+                if(position != 0) {
+                    Toast.makeText(getApplicationContext(), "Ce niveau n'est pas encore disponible", Toast.LENGTH_SHORT).show();
+                } else {
+                    Intent intent = new Intent(LevelActivity.this, MainActivity.class);
+                    intent.putExtra("img_position", imageAdapter.getIdResource(position));
+                    intent.putExtra("position", (position+1));
+                    startActivity(intent);
+                }
+
             }
         });
     }
