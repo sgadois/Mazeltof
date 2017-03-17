@@ -7,6 +7,8 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.media.AudioManager;
+import android.media.ToneGenerator;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -24,21 +26,24 @@ import com.m2dl.mobe.mazeltof.R;
 
 import java.util.Timer;
 import java.util.TimerTask;
-import android.graphics.Canvas;
-import android.graphics.Paint;
 
 public class LabyrintheActivity extends AppCompatActivity {
 
     private Ball mBallView = null;
     private Handler RedrawHandler = new Handler(); //so redraw occurs in main thread
     private Timer mTmr = null;
+    private int jumpCount;
     private TimerTask mTsk = null;
     private int mScrWidth, mScrHeight;
     private android.graphics.PointF mBallPos, mBallSpd;
     private Labyrinthe labyrinthe;
     private int level;
 
-    private int time;
+    private int millisecond;
+    private int centieme;
+    private int second;
+    private int minute;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +56,10 @@ public class LabyrintheActivity extends AppCompatActivity {
         setContentView(R.layout.layout_test_ball);
 
 
-        time = 0;
+        millisecond = 0;
+        centieme = 0;
+        second = 0;
+        minute = 0;
 
         level = 1; //TEMPORAIRE /!\
         switch(level){
@@ -83,6 +91,8 @@ public class LabyrintheActivity extends AppCompatActivity {
         mBallView = new Ball(this, mBallPos.x, mBallPos.y, 20);
 
         mainView.addView(mBallView); //add ball to main screen
+        mainView.addView(labyrinthe);
+        labyrinthe.invalidate();
         mBallView.invalidate(); //call onDraw in BallView
 
         //listener for accelerometer, use anonymous class for simplicity
@@ -103,14 +113,14 @@ public class LabyrintheActivity extends AppCompatActivity {
                 SensorManager.SENSOR_DELAY_NORMAL);
 
         //listener for touch event
-        mainView.setOnTouchListener(new android.view.View.OnTouchListener() {
+        /*mainView.setOnTouchListener(new android.view.View.OnTouchListener() {
             public boolean onTouch(android.view.View v, android.view.MotionEvent e) {
                 //set ball position based on screen touch
                 mBallPos.x = e.getX();
                 mBallPos.y = e.getY();
                 //timer event will redraw ball
                 return true;
-            }});
+            }});*/
     }
 
     //listener for menu button on phone
@@ -150,9 +160,33 @@ public class LabyrintheActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     public void run() {
                         //update time
-                        time += 10;
+                        millisecond += 10;
+                        if(millisecond == 10) {
+                            centieme += 1;
+                            millisecond = 0;
+                        }
+                        if(centieme == 100) {
+                            second += 1;
+                            centieme = 0;
+                        }
+                        if(second == 60) {
+                            minute += 1;
+                            second = 0;
+                        }
+
+                        //jump counter
+                        if(mBallView.isJump()){
+                            jumpCount++;
+                            if(jumpCount==100){
+                                jumpCount=0;
+                                mBallView.fall();
+                                ToneGenerator toneGen1 = new ToneGenerator(AudioManager.STREAM_RING,ToneGenerator.MAX_VOLUME);
+                                toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP,200);
+                            }
+                        }
+
                         TextView timer = (TextView) findViewById(R.id.time);
-                        timer.setText("" + time);
+                        timer.setText(String.format("%02d", minute) + ":" + String.format("%02d", second) + ":" + String.format("%02d", centieme));
 
                         //move ball based on current speed
                         mBallPos.x += mBallSpd.x;
@@ -176,6 +210,7 @@ public class LabyrintheActivity extends AppCompatActivity {
                                 mBallView.invalidate();
                             }
                         });
+                        isWin();
                     }
                 });
             }};
@@ -223,11 +258,18 @@ public class LabyrintheActivity extends AppCompatActivity {
         labyrinthe = new Labyrinthe(this, labyrintheArray,holeArray);
     }
 
-    public void win(){
-
+    public void isWin(){
+        if(mBallPos.x>= mScrWidth || mBallPos.y >= mScrHeight){
+            //MURIEL LOL C EST ICI QU ON A GAGNE HAHA
+        }
     }
 
     public boolean onTouchEvent(MotionEvent event){
+        if(!mBallView.isJump()){
+            jumpCount=0;
+            ToneGenerator toneGen1 = new ToneGenerator(AudioManager.STREAM_RING,ToneGenerator.MAX_VOLUME);
+            toneGen1.startTone(ToneGenerator.TONE_CDMA_DIAL_TONE_LITE,200);
+        }
         this.mBallView.jump();
         return false;
     }
