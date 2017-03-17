@@ -28,6 +28,8 @@ public class ImageAdapter extends BaseAdapter {
         return null;
     }
 
+    public int getIdResource(int position) {return mThumbIds[position];}
+
     public long getItemId(int position) {
         return 0;
     }
@@ -44,13 +46,12 @@ public class ImageAdapter extends BaseAdapter {
         } else {
             imageView = (ImageView) convertView;
         }
-
         imageView.setImageResource(mThumbIds[position]);
         return imageView;
     }
 
     // references to our images
     private Integer[] mThumbIds = {
-            R.drawable.jouer_1, R.drawable.jouer_2
+            R.drawable.jouer, R.drawable.niveaux
     };
 }
