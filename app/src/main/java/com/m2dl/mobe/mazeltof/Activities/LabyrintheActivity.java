@@ -21,6 +21,11 @@ import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.m2dl.mobe.mazeltof.Models.Ball;
 import com.m2dl.mobe.mazeltof.Models.Labyrinthe;
 import com.m2dl.mobe.mazeltof.Models.Wall;
@@ -44,10 +49,13 @@ public class LabyrintheActivity extends AppCompatActivity {
     private Labyrinthe labyrinthe;
     private int level;
 
+    private Long totalMillisecond;
     private int millisecond;
     private int centieme;
     private int second;
     private int minute;
+
+    private Long currentTopScore;
 
 
     @Override
@@ -60,7 +68,8 @@ public class LabyrintheActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_test_ball);
 
-
+        totalMillisecond = 0L;
+        currentTopScore = 0L;
         millisecond = 0;
         centieme = 0;
         second = 0;
@@ -117,15 +126,20 @@ public class LabyrintheActivity extends AppCompatActivity {
                         .getSensorList(Sensor.TYPE_ACCELEROMETER).get(0),
                 SensorManager.SENSOR_DELAY_NORMAL);
 
-        //listener for touch event
-        /*mainView.setOnTouchListener(new android.view.View.OnTouchListener() {
-            public boolean onTouch(android.view.View v, android.view.MotionEvent e) {
-                //set ball position based on screen touch
-                mBallPos.x = e.getX();
-                mBallPos.y = e.getY();
-                //timer event will redraw ball
-                return true;
-            }});*/
+        final DatabaseReference database = FirebaseDatabase.getInstance().getReference("level1");
+        ValueEventListener postListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                TextView bestTime = (TextView) findViewById(R.id.data_best_time);
+                bestTime.setText(dataSnapshot.child("top_time").getValue().toString());
+                currentTopScore = (Long) dataSnapshot.child("top_time_millisecond").getValue();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        };
+        database.addListenerForSingleValueEvent(postListener);
     }
 
     //listener for menu button on phone
@@ -182,7 +196,7 @@ public class LabyrintheActivity extends AppCompatActivity {
                         //jump counter
                         if(mBallView.isJump()){
                             jumpCount++;
-                            if(jumpCount==100){
+                            if(jumpCount==50){
                                 jumpCount=0;
                                 mBallView.fall();
                                 ToneGenerator toneGen1 = new ToneGenerator(AudioManager.STREAM_RING,ToneGenerator.MAX_VOLUME);
@@ -207,20 +221,21 @@ public class LabyrintheActivity extends AppCompatActivity {
                             mBallPos.y = (mScrHeight - mBallView.r / 2);
                         if (mBallPos.x < mBallView.r / 2) mBallPos.x = mBallView.r / 2;
                         if (mBallPos.y < mBallView.r / 2) mBallPos.y = mBallView.r / 2;*/
-
-                        //if ball touch wall, don't move
-                        for(Wall myWall : labyrinthe.getWall()) {
-                            if (mBallPos.x < min(myWall.getPointD().x, myWall.getPointF().x) +  mBallView.r &&
-                                    mBallPos.x > min(myWall.getPointD().x, myWall.getPointF().x) - mBallView.r &&
-                                    mBallPos.y > min(myWall.getPointD().y, myWall.getPointF().y) &&
-                                    mBallPos.y < max(myWall.getPointD().y, myWall.getPointF().y)) {
-                                mBallPos.x = tempx;
-                            }
-                            if (mBallPos.y < min(myWall.getPointD().y, myWall.getPointF().y) + mBallView.r &&
-                                    mBallPos.y > min(myWall.getPointD().y, myWall.getPointF().y) - mBallView.r &&
-                                    mBallPos.x > min(myWall.getPointD().x, myWall.getPointF().x) &&
-                                    mBallPos.x < max(myWall.getPointD().x, myWall.getPointF().x)) {
-                                mBallPos.y = tempy;
+                        if(!mBallView.isJump()) {
+                            //if ball touch wall, don't move
+                            for (Wall myWall : labyrinthe.getWall()) {
+                                if (mBallPos.x < min(myWall.getPointD().x, myWall.getPointF().x) + mBallView.r &&
+                                        mBallPos.x > min(myWall.getPointD().x, myWall.getPointF().x) - mBallView.r &&
+                                        mBallPos.y > min(myWall.getPointD().y, myWall.getPointF().y) &&
+                                        mBallPos.y < max(myWall.getPointD().y, myWall.getPointF().y)) {
+                                    mBallPos.x = tempx;
+                                }
+                                if (mBallPos.y < min(myWall.getPointD().y, myWall.getPointF().y) + mBallView.r &&
+                                        mBallPos.y > min(myWall.getPointD().y, myWall.getPointF().y) - mBallView.r &&
+                                        mBallPos.x > min(myWall.getPointD().x, myWall.getPointF().x) &&
+                                        mBallPos.x < max(myWall.getPointD().x, myWall.getPointF().x)) {
+                                    mBallPos.y = tempy;
+                                }
                             }
                         }
 
