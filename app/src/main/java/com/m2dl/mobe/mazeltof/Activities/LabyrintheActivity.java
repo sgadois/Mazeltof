@@ -172,4 +172,8 @@ public class LabyrintheActivity extends AppCompatActivity {
         super.onConfigurationChanged(newConfig);
     }
 
+    public void win(){
+
+    }
+
 }
