@@ -2,6 +2,7 @@ package com.m2dl.mobe.mazeltof.Activities;
 
 import android.content.Context;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -17,6 +18,7 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 
 import com.m2dl.mobe.mazeltof.Models.Ball;
+import com.m2dl.mobe.mazeltof.Models.Labyrinthe;
 import com.m2dl.mobe.mazeltof.R;
 
 import java.util.Timer;
@@ -24,12 +26,14 @@ import java.util.TimerTask;
 
 public class LabyrintheActivity extends AppCompatActivity {
 
-    Ball mBallView = null;
-    Handler RedrawHandler = new Handler(); //so redraw occurs in main thread
-    Timer mTmr = null;
-    TimerTask mTsk = null;
-    int mScrWidth, mScrHeight;
-    android.graphics.PointF mBallPos, mBallSpd;
+    private Ball mBallView = null;
+    private Handler RedrawHandler = new Handler(); //so redraw occurs in main thread
+    private Timer mTmr = null;
+    private TimerTask mTsk = null;
+    private int mScrWidth, mScrHeight;
+    private android.graphics.PointF mBallPos, mBallSpd;
+    private Labyrinthe labyrinthe;
+    private int level;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -170,6 +174,12 @@ public class LabyrintheActivity extends AppCompatActivity {
     public void onConfigurationChanged(Configuration newConfig)
     {
         super.onConfigurationChanged(newConfig);
+    }
+
+    private void readLabyrinth(int resId) {
+        Resources res = this.getResources();
+        String[] labyrinthRows = res.getStringArray(resId);
+        labyrinthe = new Labyrinthe();
     }
 
     public void win(){
