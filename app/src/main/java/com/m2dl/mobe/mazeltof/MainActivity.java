@@ -52,5 +52,13 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(context, LevelActivity.class));
             }
         });
+
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        mediaPlayer.stop();
+        android.os.Process.killProcess(android.os.Process.myPid());
     }
 }
