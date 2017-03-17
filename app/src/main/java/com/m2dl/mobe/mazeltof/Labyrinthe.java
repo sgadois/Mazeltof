@@ -141,7 +141,7 @@ public class Labyrinthe extends AppCompatActivity {
                 //update ball class instance
                 mBallView.x = mBallPos.x;
                 mBallView.y = mBallPos.y;
-                
+
                 //redraw ball. Must run in background thread to prevent thread lock.
                 RedrawHandler.post(new Runnable() {
                     public void run() {
