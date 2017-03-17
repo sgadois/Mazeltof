@@ -9,6 +9,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.media.ToneGenerator;
 import android.os.Bundle;
 import android.os.Handler;
@@ -66,8 +67,9 @@ public class LabyrintheActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN| WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_test_ball);
-
+        setContentView(R.layout.layout_test_ball);;
+        MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.expert);
+        mediaPlayer.start();
         totalMillisecond = 0L;
         currentTopScore = 0L;
         millisecond = 0;
