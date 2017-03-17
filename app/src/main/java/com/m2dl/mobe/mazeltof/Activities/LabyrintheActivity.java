@@ -9,6 +9,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.media.ToneGenerator;
 import android.os.Bundle;
 import android.os.Handler;
@@ -54,6 +55,7 @@ public class LabyrintheActivity extends AppCompatActivity {
     private int centieme;
     private int second;
     private int minute;
+    private MediaPlayer mediaPlayer;
 
     private Long currentTopScore;
 
@@ -66,8 +68,9 @@ public class LabyrintheActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN| WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_test_ball);
-
+        setContentView(R.layout.layout_test_ball);;
+        mediaPlayer = MediaPlayer.create(this, R.raw.expert);
+        mediaPlayer.start();
         totalMillisecond = 0L;
         currentTopScore = 0L;
         millisecond = 0;
@@ -300,6 +303,7 @@ public class LabyrintheActivity extends AppCompatActivity {
 
     public void isWin(){
         if(mBallPos.x>= mScrWidth || mBallPos.y >= mScrHeight){
+            mediaPlayer.stop();
             Intent intent = new Intent(this, WinActivity.class);
             intent.putExtra("time", String.format("%02d", minute) + ":" + String.format("%02d", second) + ":" + String.format("%02d", centieme));
             startActivity(intent);
@@ -307,6 +311,7 @@ public class LabyrintheActivity extends AppCompatActivity {
                 DatabaseReference database = FirebaseDatabase.getInstance().getReference("level1");
                 database.child("top_time").setValue(String.format("%02d", minute) + ":" + String.format("%02d", second) + ":" + String.format("%02d", centieme));
                 database.child("top_time_millisecond").setValue(totalMillisecond);
+
             }
         }
     }
