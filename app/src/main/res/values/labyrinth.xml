@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="level1">
+        <item>1111111111</item>
+        <item>1000000001</item>
+        <item>1111111101</item>
+        <item>1000000001</item>
+        <item>1011111111</item>
+        <item>1000000001</item>
+        <item>1111111101</item>
+        <item>1000000001</item>
+        <item>1011111111</item>
+        <item>1000000001</item>
+        <item>1111111101</item>
+        <item>1111111101</item>
+    </string-array>
+    <string-array name="level2">
+
+    </string-array>
+</resources>

@@ -2,6 +2,7 @@ package com.m2dl.mobe.mazeltof.Activities;
 
 import android.content.Context;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -17,6 +18,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.m2dl.mobe.mazeltof.Models.Ball;
+import com.m2dl.mobe.mazeltof.Models.Labyrinthe;
 import com.m2dl.mobe.mazeltof.R;
 
 import java.util.Timer;
@@ -24,12 +26,14 @@ import java.util.TimerTask;
 
 public class LabyrintheActivity extends AppCompatActivity {
 
-    Ball mBallView = null;
-    Handler RedrawHandler = new Handler(); //so redraw occurs in main thread
-    Timer mTmr = null;
-    TimerTask mTsk = null;
-    int mScrWidth, mScrHeight;
-    android.graphics.PointF mBallPos, mBallSpd;
+    private Ball mBallView = null;
+    private Handler RedrawHandler = new Handler(); //so redraw occurs in main thread
+    private Timer mTmr = null;
+    private TimerTask mTsk = null;
+    private int mScrWidth, mScrHeight;
+    private android.graphics.PointF mBallPos, mBallSpd;
+    private Labyrinthe labyrinthe;
+    private int level;
 
     private int time;
 
@@ -43,7 +47,17 @@ public class LabyrintheActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_test_ball);
 
+
         time = 0;
+
+        level = 1; //TEMPORAIRE /!\
+        switch(level){
+            case 1 :
+                readLabyrinth(R.array.level1,R.array.hole1);
+                break;
+            default:
+                break;
+        }
 
         //create pointer to main screen
         final RelativeLayout mainView =
@@ -181,6 +195,27 @@ public class LabyrintheActivity extends AppCompatActivity {
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
+    }
+
+    private void readLabyrinth(int lvlId,int holeId) {
+        Resources res = this.getResources();
+        String[] labyrinthRows = res.getStringArray(lvlId);
+        String[] holeRows = res.getStringArray(holeId);
+
+        boolean[][] labyrintheArray = new boolean[labyrinthRows[1].length()][labyrinthRows.length];
+        boolean[][] holeArray = new boolean[holeRows[1].length()][holeRows.length];
+        for(int i = 0; i<labyrinthRows.length;i++){
+            for(int j = 0; j<labyrinthRows[i].length();j++){
+                labyrintheArray[i][j] = Character.getNumericValue(labyrinthRows[i].charAt(j)) > 0?true:false;
+            }
+        }
+
+        for(int i = 0; i<holeRows.length;i++){
+            for(int j = 0; j<holeRows[i].length();j++){
+                holeArray[i][j] = Character.getNumericValue(holeRows[i].charAt(j)) > 0?true:false;
+            }
+        }
+        labyrinthe = new Labyrinthe(labyrintheArray,holeArray);
     }
 
     public void win(){

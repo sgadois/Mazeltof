@@ -12,8 +12,14 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".Activities.LabyrintheActivity"
+<<<<<<< HEAD
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
+=======
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait">
+
+>>>>>>> 7abed1ee5cb38c2f0a26cc8244ef6d42b02262ab
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
