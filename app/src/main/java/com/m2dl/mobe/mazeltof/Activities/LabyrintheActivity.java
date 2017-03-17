@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 
 import com.m2dl.mobe.mazeltof.Models.Ball;
 import com.m2dl.mobe.mazeltof.R;
@@ -44,8 +45,8 @@ public class LabyrintheActivity extends AppCompatActivity {
         setContentView(R.layout.layout_test_ball);
 
         //create pointer to main screen
-        final FrameLayout mainView =
-                (android.widget.FrameLayout)findViewById(R.id.main_view);
+        final RelativeLayout mainView =
+                (android.widget.RelativeLayout)findViewById(R.id.main_view);
 
         //get screen dimensions
         Display display = getWindowManager().getDefaultDisplay();
@@ -129,15 +130,16 @@ public class LabyrintheActivity extends AppCompatActivity {
         mTmr = new Timer();
         mTsk = new TimerTask() {
             public void run() {
+
                 //move ball based on current speed
                 mBallPos.x += mBallSpd.x;
                 mBallPos.y += mBallSpd.y;
 
-                //if ball goes off screen, reposition to opposite side of screen
-                if (mBallPos.x > mScrWidth) mBallPos.x=0;
-                if (mBallPos.y > mScrHeight) mBallPos.y=0;
-                if (mBallPos.x < 0) mBallPos.x=mScrWidth;
-                if (mBallPos.y < 0) mBallPos.y=mScrHeight;
+                //if ball is on border, don't move
+                if (mBallPos.x > (mScrWidth - mBallView.r/2)) mBallPos.x=(mScrWidth - mBallView.r/2);
+                if (mBallPos.y > (mScrHeight - mBallView.r/2)) mBallPos.y=(mScrHeight - mBallView.r/2);
+                if (mBallPos.x < mBallView.r/2) mBallPos.x=mBallView.r/2;
+                if (mBallPos.y < mBallView.r/2) mBallPos.y=mBallView.r/2;
 
                 //update ball class instance
                 mBallView.x = mBallPos.x;
