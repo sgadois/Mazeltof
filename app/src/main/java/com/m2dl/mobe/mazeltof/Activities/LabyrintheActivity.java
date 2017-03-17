@@ -179,6 +179,7 @@ public class LabyrintheActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     public void run() {
                         //update time
+                        totalMillisecond += 10;
                         millisecond += 10;
                         if(millisecond == 10) {
                             centieme += 1;
@@ -300,6 +301,11 @@ public class LabyrintheActivity extends AppCompatActivity {
     public void isWin(){
         if(mBallPos.x>= mScrWidth || mBallPos.y >= mScrHeight){
             startActivity(new Intent(this, WinActivity.class));
+            if(totalMillisecond < currentTopScore) {
+                DatabaseReference database = FirebaseDatabase.getInstance().getReference("level1");
+                database.child("top_time").setValue(String.format("%02d", minute) + ":" + String.format("%02d", second) + ":" + String.format("%02d", centieme));
+                database.child("top_time_millisecond").setValue(totalMillisecond);
+            }
         }
     }
 
