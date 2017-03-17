@@ -24,6 +24,8 @@ import com.m2dl.mobe.mazeltof.R;
 
 import java.util.Timer;
 import java.util.TimerTask;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 
 public class LabyrintheActivity extends AppCompatActivity {
 
@@ -205,7 +207,7 @@ public class LabyrintheActivity extends AppCompatActivity {
                 holeArray[i][j] = Character.getNumericValue(holeRows[i].charAt(j)) > 0?true:false;
             }
         }
-        labyrinthe = new Labyrinthe(labyrintheArray,holeArray);
+        labyrinthe = new Labyrinthe(labyrintheArray,holeArray, getApplicationContext());
     }
 
     public void win(){
