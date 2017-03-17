@@ -26,6 +26,9 @@
         <activity
             android:name=".Activities.LevelActivity"
             android:label="Choix du niveau" />
+        <activity
+            android:name=".Activities.WinActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

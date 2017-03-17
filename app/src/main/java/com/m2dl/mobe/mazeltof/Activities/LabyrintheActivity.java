@@ -1,6 +1,7 @@
 package com.m2dl.mobe.mazeltof.Activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.hardware.Sensor;
@@ -283,7 +284,7 @@ public class LabyrintheActivity extends AppCompatActivity {
 
     public void isWin(){
         if(mBallPos.x>= mScrWidth || mBallPos.y >= mScrHeight){
-            //MURIEL LOL C EST ICI QU ON A GAGNE HAHA
+            startActivity(new Intent(this, WinActivity.class));
         }
     }
 
