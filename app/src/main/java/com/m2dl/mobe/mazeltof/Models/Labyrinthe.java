@@ -1,14 +1,16 @@
 package com.m2dl.mobe.mazeltof.Models;
 
+import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.graphics.PointF;
-
-import static android.R.attr.bitmap;
+import android.view.View;
 
 /**
  * Created by Blue on 17/03/2017.
  */
 
-public class Labyrinthe {
+public class Labyrinthe extends View {
 
     private boolean[][] wall;
     private boolean[][] hole;
@@ -16,8 +18,12 @@ public class Labyrinthe {
     private PointF depart;
     private PointF fin;
 
+    private final Paint mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
-    public Labyrinthe(boolean[][] wall, boolean[][] hole,float xDepart, float yDepart, float xFin, float yFin){
+
+    public Labyrinthe(Context context, boolean[][] wall, boolean[][] hole,float xDepart, float yDepart, float xFin, float yFin){
+        super(context);
+        mPaint.setColor(0x00000000);
         this.wall = wall;
         this.hole = hole;
         depart= new PointF();
@@ -26,7 +32,9 @@ public class Labyrinthe {
         fin.set(xFin,yFin);
     }
 
-    public Labyrinthe(boolean[][] wall, boolean[][] hole){
+    public Labyrinthe(Context context, boolean[][] wall, boolean[][] hole){
+        super(context);
+        mPaint.setColor(0x00000000);
         this.wall = wall;
         this.hole = hole;
         depart= new PointF();
@@ -35,12 +43,10 @@ public class Labyrinthe {
 
     public void setDepart(float xDepart,float yDepart){
         depart.set(xDepart,yDepart);
-
     }
 
     public void setFin(float xFin, float yFin){
         fin.set(xFin,yFin);
-
     }
 
     public boolean[][] getHole(){
@@ -51,5 +57,9 @@ public class Labyrinthe {
         return this.wall;
     }
 
-
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+        canvas.drawLine(10, 20, 30, 20, mPaint);
+    }
 }

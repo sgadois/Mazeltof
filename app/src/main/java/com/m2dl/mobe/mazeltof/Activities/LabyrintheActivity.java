@@ -202,8 +202,9 @@ public class LabyrintheActivity extends AppCompatActivity {
         String[] labyrinthRows = res.getStringArray(lvlId);
         String[] holeRows = res.getStringArray(holeId);
 
-        boolean[][] labyrintheArray = new boolean[labyrinthRows[1].length()][labyrinthRows.length];
-        boolean[][] holeArray = new boolean[holeRows[1].length()][holeRows.length];
+        boolean[][] labyrintheArray = new boolean[labyrinthRows.length][labyrinthRows[1].length()];
+        boolean[][] holeArray = new boolean[holeRows.length][holeRows[1].length()];
+
         for(int i = 0; i<labyrinthRows.length;i++){
             for(int j = 0; j<labyrinthRows[i].length();j++){
                 labyrintheArray[i][j] = Character.getNumericValue(labyrinthRows[i].charAt(j)) > 0?true:false;
@@ -215,7 +216,7 @@ public class LabyrintheActivity extends AppCompatActivity {
                 holeArray[i][j] = Character.getNumericValue(holeRows[i].charAt(j)) > 0?true:false;
             }
         }
-        labyrinthe = new Labyrinthe(labyrintheArray,holeArray);
+        labyrinthe = new Labyrinthe(this, labyrintheArray,holeArray);
     }
 
     public void win(){
