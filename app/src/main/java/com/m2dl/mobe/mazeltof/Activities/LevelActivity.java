@@ -29,8 +29,6 @@ public class LevelActivity extends AppCompatActivity {
         this.gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
-                Toast.makeText(LevelActivity.this, "" + position,
-                        Toast.LENGTH_SHORT).show();
                 if(position != 0) {
                     Toast.makeText(getApplicationContext(), "Ce niveau n'est pas encore disponible", Toast.LENGTH_SHORT).show();
                 } else {
