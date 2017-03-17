@@ -9,6 +9,7 @@ import android.view.Display;
 import android.view.View;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -126,8 +127,37 @@ public class Labyrinthe extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        for(Wall myWall : wallResized) {
+        for(Wall myWall : getTrumpWall()) {
             canvas.drawLine(myWall.getPointD().x, myWall.getPointD().y, myWall.getPointF().x, myWall.getPointF().y, mPaint);
         }
+    }
+
+    public List<Wall> getTrumpWall() {
+        List<Wall> trumpWall = new ArrayList<Wall>();
+        PointF d = new PointF();
+        PointF f = new PointF();
+        d.set(screenX/2 - 200, screenY/2 - 200);
+        f.set(screenX/2 - 200, screenY/2 + 200);
+        trumpWall.add(new Wall(d, f));
+
+        d = new PointF();
+        f = new PointF();
+        d.set(screenX/2 - 200, screenY/2 + 200);
+        f.set(screenX/2 + 200, screenY/2 + 200);
+        trumpWall.add(new Wall(d, f));
+
+        d = new PointF();
+        f = new PointF();
+        d.set(screenX/2 + 200, screenY/2 + 200);
+        f.set(screenX/2 + 200, screenY/2 - 200);
+        trumpWall.add(new Wall(d, f));
+
+        d = new PointF();
+        f = new PointF();
+        d.set(screenX/2 + 200, screenY/2 - 200);
+        f.set(screenX/2 - 200, screenY/2 - 200);
+        trumpWall.add(new Wall(d, f));
+
+        return trumpWall;
     }
 }
