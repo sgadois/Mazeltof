@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
         play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mediaPlayer.stop();
                 startActivity(new Intent(MainActivity.this, LabyrintheActivity.class));
             }
         });
