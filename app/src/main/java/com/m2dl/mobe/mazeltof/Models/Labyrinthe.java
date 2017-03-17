@@ -5,5 +5,5 @@ package com.m2dl.mobe.mazeltof.Models;
  */
 
 public class Labyrinthe {
-    
+
 }
