@@ -63,23 +63,23 @@ public class Labyrinthe extends View {
 
     public void makeWall(){
 
-        for(int j= 0; j<10; j++){
+        for(int i= 0; i<10; i++){
             boolean debuter = false;
             PointF debut = new PointF();
             PointF fin = new PointF();
-            for(int i = 0; i<12; i++){
-                if(wall[i][j]){
+            for(int j = 0; j<12; j++){
+                if(wall[j][i]){
                    if(!debuter){
                        debuter = true;
                        debut=new PointF();
-                       debut.set(i*screenX/wall.length, j*screenY/wall[j].length);
+                       debut.set(i*(screenX)/9,j*screenY/11);
                    }
 
-                    if(debuter && i == 12-1){
+                    if(debuter && j == 12-1){
 
                         debuter=false;
                         fin = new PointF();
-                        fin.set(i*screenX/wall.length, j*screenY/wall[j].length);
+                        fin.set( i*(screenX)/9,j*screenY/11);
                         wallResized.add(new Wall(debut,fin));
                     }
                 }
@@ -87,7 +87,7 @@ public class Labyrinthe extends View {
                     if(debuter) {
                         debuter=false;
                         fin = new PointF();
-                        fin.set((i-1)*screenX/wall.length, j*screenY/wall[j].length);
+                        fin.set( i*(screenX)/9,(j-1)*screenY/11);
                         wallResized.add(new Wall(debut,fin));
                     }
                 }
@@ -104,13 +104,13 @@ public class Labyrinthe extends View {
                     if(!debuter){
                         debuter = true;
                         debut=new PointF();
-                        debut.set(i*screenX/wall.length, j*screenY/wall[j].length);
+                        debut.set( j*(screenX)/9,i*screenY/11);
                     }
 
                     if(debuter && j == 10-1){
                         debuter=false;
                         fin = new PointF();
-                        fin.set(i*screenX/wall.length, j*screenY/wall[j].length);
+                        fin.set(j*(screenX)/9,i*screenY/11);
                         wallResized.add(new Wall(debut,fin));
                     }
                 }
@@ -118,7 +118,7 @@ public class Labyrinthe extends View {
                     if(debuter) {
                         debuter=false;
                         fin = new PointF();
-                        fin.set((i-1)*screenX/wall.length, j*screenY/wall[j].length);
+                        fin.set( (j-1)*(screenX)/9,(i)*screenY/11);
                         wallResized.add(new Wall(debut,fin));
                     }
                 }

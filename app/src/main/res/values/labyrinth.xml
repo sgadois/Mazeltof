@@ -2,17 +2,17 @@
 <resources>
     <string-array name="level1">
         <item>1111111111</item>
-        <item>1000000001</item>
-        <item>1111111101</item>
-        <item>1000000001</item>
-        <item>1011111111</item>
-        <item>1000000001</item>
-        <item>1111111101</item>
-        <item>1000000001</item>
-        <item>1011111111</item>
-        <item>1000000001</item>
-        <item>1111111101</item>
-        <item>1111111101</item>
+        <item>1100000011</item>
+        <item>1111111011</item>
+        <item>1100000011</item>
+        <item>1101111111</item>
+        <item>1100000011</item>
+        <item>1111111011</item>
+        <item>1100000011</item>
+        <item>1101111111</item>
+        <item>1100000011</item>
+        <item>1111111011</item>
+        <item>1111111011</item>
     </string-array>
     <string-array name="level2">
 
