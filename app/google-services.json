@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "257180242443",
+    "firebase_url": "https://mobechallenge.firebaseio.com",
+    "project_id": "mobechallenge",
+    "storage_bucket": "mobechallenge.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:257180242443:android:b7c4648c8ae330c0",
+        "android_client_info": {
+          "package_name": "com.m2dl.mobe.mazeltof"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "257180242443-6kde0thqmb20rvjafqnsua59o5m27cj8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.m2dl.mobe.mazeltof",
+            "certificate_hash": "fcf52aad2eff348c3a254ae2f76046584464fdbf"
+          }
+        },
+        {
+          "client_id": "257180242443-rtbjrdo9dt54fjfnne192a788k048tc1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBuG5uNQHiVbwHeJu-RQZ4TaHdfYq0d-xc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "257180242443-rtbjrdo9dt54fjfnne192a788k048tc1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
