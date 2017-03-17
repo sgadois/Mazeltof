@@ -301,7 +301,9 @@ public class LabyrintheActivity extends AppCompatActivity {
 
     public void isWin(){
         if(mBallPos.x>= mScrWidth || mBallPos.y >= mScrHeight){
-            startActivity(new Intent(this, WinActivity.class));
+            Intent intent = new Intent(this, WinActivity.class);
+            intent.putExtra("time", String.format("%02d", minute) + ":" + String.format("%02d", second) + ":" + String.format("%02d", centieme));
+            startActivity(intent);
             if(totalMillisecond < currentTopScore) {
                 DatabaseReference database = FirebaseDatabase.getInstance().getReference("level1");
                 database.child("top_time").setValue(String.format("%02d", minute) + ":" + String.format("%02d", second) + ":" + String.format("%02d", centieme));
