@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.m2dl.mobe.mazeltof.Models.Ball;
 import com.m2dl.mobe.mazeltof.Models.Labyrinthe;
+import com.m2dl.mobe.mazeltof.Models.Wall;
 import com.m2dl.mobe.mazeltof.R;
 
 import java.util.Timer;
@@ -174,6 +175,9 @@ public class LabyrintheActivity extends AppCompatActivity {
                         timer.setText(String.format("%02d", minute) + ":" + String.format("%02d", second) + ":" + String.format("%02d", centieme));
 
                         //move ball based on current speed
+                        float tempx = mBallPos.x;
+                        float tempy = mBallPos.y;
+
                         mBallPos.x += mBallSpd.x;
                         mBallPos.y += mBallSpd.y;
 
@@ -184,6 +188,20 @@ public class LabyrintheActivity extends AppCompatActivity {
                             mBallPos.y = (mScrHeight - mBallView.r / 2);
                         if (mBallPos.x < mBallView.r / 2) mBallPos.x = mBallView.r / 2;
                         if (mBallPos.y < mBallView.r / 2) mBallPos.y = mBallView.r / 2;
+
+                        //if ball touch wall, don't move
+                        for(Wall myWall : labyrinthe.getWall()) {
+                            if (mBallPos.x == myWall.getPointD().x &&
+                                    mBallPos.y > myWall.getPointD().y &&
+                                    mBallPos.y > myWall.getPointF().y) {
+                                mBallPos.x = tempx;
+                            }
+                            if (mBallPos.y == myWall.getPointD().y &&
+                                    mBallPos.x > myWall.getPointD().x &&
+                                    mBallPos.x > myWall.getPointF().x) {
+                                mBallPos.y = tempy;
+                            }
+                        }
 
                         //update ball class instance
                         mBallView.x = mBallPos.x;
@@ -242,7 +260,7 @@ public class LabyrintheActivity extends AppCompatActivity {
         labyrinthe = new Labyrinthe(this, labyrintheArray,holeArray);
     }
 
-    public void win(){
+    public void win() {
 
     }
 
