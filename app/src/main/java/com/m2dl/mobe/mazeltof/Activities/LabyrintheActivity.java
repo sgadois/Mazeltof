@@ -12,10 +12,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.Window;
 import android.view.WindowManager;
-import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.m2dl.mobe.mazeltof.Models.Ball;
 import com.m2dl.mobe.mazeltof.R;
@@ -32,17 +31,19 @@ public class LabyrintheActivity extends AppCompatActivity {
     int mScrWidth, mScrHeight;
     android.graphics.PointF mBallPos, mBallSpd;
 
+    private int time;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-
-        requestWindowFeature(Window.FEATURE_NO_TITLE); //hide title bar
         //set app to full screen and keep screen on
         getWindow().setFlags(0xFFFFFFFF,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN| WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_test_ball);
+
+        time = 0;
 
         //create pointer to main screen
         final RelativeLayout mainView =
@@ -124,40 +125,49 @@ public class LabyrintheActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onResume() //app moved to foreground (also occurs at app startup)
-    {
+    public void onResume() {
         //create timer to move ball to new position
         mTmr = new Timer();
         mTsk = new TimerTask() {
             public void run() {
-
-                //move ball based on current speed
-                mBallPos.x += mBallSpd.x;
-                mBallPos.y += mBallSpd.y;
-
-                //if ball is on border, don't move
-                if (mBallPos.x > (mScrWidth - mBallView.r/2)) mBallPos.x=(mScrWidth - mBallView.r/2);
-                if (mBallPos.y > (mScrHeight - mBallView.r/2)) mBallPos.y=(mScrHeight - mBallView.r/2);
-                if (mBallPos.x < mBallView.r/2) mBallPos.x=mBallView.r/2;
-                if (mBallPos.y < mBallView.r/2) mBallPos.y=mBallView.r/2;
-
-                //update ball class instance
-                mBallView.x = mBallPos.x;
-                mBallView.y = mBallPos.y;
-
-                //redraw ball. Must run in background thread to prevent thread lock.
-                RedrawHandler.post(new Runnable() {
+                runOnUiThread(new Runnable() {
                     public void run() {
-                        mBallView.invalidate();
-                    }});
-            }}; // TimerTask
+                        //update time
+                        time += 10;
+                        TextView timer = (TextView) findViewById(R.id.time);
+                        timer.setText("" + time);
+
+                        //move ball based on current speed
+                        mBallPos.x += mBallSpd.x;
+                        mBallPos.y += mBallSpd.y;
+
+                        //if ball is on border, don't move
+                        if (mBallPos.x > (mScrWidth - mBallView.r / 2))
+                            mBallPos.x = (mScrWidth - mBallView.r / 2);
+                        if (mBallPos.y > (mScrHeight - mBallView.r / 2))
+                            mBallPos.y = (mScrHeight - mBallView.r / 2);
+                        if (mBallPos.x < mBallView.r / 2) mBallPos.x = mBallView.r / 2;
+                        if (mBallPos.y < mBallView.r / 2) mBallPos.y = mBallView.r / 2;
+
+                        //update ball class instance
+                        mBallView.x = mBallPos.x;
+                        mBallView.y = mBallPos.y;
+
+                        //redraw ball. Must run in background thread to prevent thread lock.
+                        RedrawHandler.post(new Runnable() {
+                            public void run() {
+                                mBallView.invalidate();
+                            }
+                        });
+                    }
+                });
+            }};
         mTmr.schedule(mTsk,10,10); //start timer
         super.onResume();
     }
 
     @Override
-    public void onDestroy() //main thread stopped
-    {
+    public void onDestroy() {
         super.onDestroy();
         //wait for threads to exit before clearing app
         System.runFinalizersOnExit(true);
@@ -169,8 +179,7 @@ public class LabyrintheActivity extends AppCompatActivity {
     //This is called when user tilts phone enough to trigger landscape view
     //we want our app to stay in portrait view, so bypass event
     @Override
-    public void onConfigurationChanged(Configuration newConfig)
-    {
+    public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
     }
 
