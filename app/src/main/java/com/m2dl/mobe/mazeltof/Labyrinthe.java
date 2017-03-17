@@ -128,9 +128,6 @@ public class Labyrinthe extends AppCompatActivity {
         mTmr = new Timer();
         mTsk = new TimerTask() {
             public void run() {
-                //if debugging with external device,
-                //  a log cat viewer will be needed on the device
-                android.util.Log.d("TiltBall","Timer Hit - " + mBallPos.x + ":" + mBallPos.y);
                 //move ball based on current speed
                 mBallPos.x += mBallSpd.x;
                 mBallPos.y += mBallSpd.y;
@@ -144,6 +141,7 @@ public class Labyrinthe extends AppCompatActivity {
                 //update ball class instance
                 mBallView.x = mBallPos.x;
                 mBallView.y = mBallPos.y;
+                
                 //redraw ball. Must run in background thread to prevent thread lock.
                 RedrawHandler.post(new Runnable() {
                     public void run() {
