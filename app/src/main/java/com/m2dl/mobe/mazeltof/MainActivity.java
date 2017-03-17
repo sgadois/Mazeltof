@@ -1,16 +1,15 @@
 package com.m2dl.mobe.mazeltof;
 
 import android.content.Intent;
-import android.provider.ContactsContract;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.m2dl.mobe.mazeltof.Activities.LabyrintheActivity;
 import com.m2dl.mobe.mazeltof.Activities.LevelActivity;
-import com.m2dl.mobe.mazeltof.Activities.PlayActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -36,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, PlayActivity.class));
+                startActivity(new Intent(MainActivity.this, LabyrintheActivity.class));
             }
         });
 

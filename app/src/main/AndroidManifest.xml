@@ -11,23 +11,21 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Activities.LabyrintheActivity"
+            android:name=".MainActivity"
 
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".Activities.PlayActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:name=".Activities.LabyrintheActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".Activities.LevelActivity"
             android:label="Choix du niveau" />
-        <activity android:name=".Preferences.MyPreferenceActivity"></activity>
     </application>
 
 </manifest>

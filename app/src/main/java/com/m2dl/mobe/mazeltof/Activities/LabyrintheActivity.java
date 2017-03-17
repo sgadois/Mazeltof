@@ -86,8 +86,8 @@ public class LabyrintheActivity extends AppCompatActivity {
         mBallSpd = new android.graphics.PointF();
 
         //create variables for ball position and speed
-        mBallPos.x = 120;
-        mBallPos.y = 100;
+        mBallPos.x = 200;
+        mBallPos.y = 200;
         mBallSpd.x = 0;
         mBallSpd.y = 0;
 
