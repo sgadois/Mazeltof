@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
@@ -11,7 +12,51 @@
     tools:context="com.m2dl.mobe.mazeltof.MainActivity">
 
     <TextView
+        android:text="Niveau x"
+        android:textAlignment="center"
+        android:layout_width="120dp"
+        android:layout_height="30dp"
+        android:id="@+id/imglabel"
+        android:layout_below="@+id/imglevel"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:text="temps"
+        android:textAlignment="center"
+        android:layout_width="120dp"
+        android:layout_height="30dp"
+        android:layout_below="@+id/imglabel"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/temps" />
+
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        app:srcCompat="@mipmap/ic_launcher"
+        android:id="@+id/imglevel"
+        android:layout_marginTop="174dp"
+        android:adjustViewBounds="false"
+        android:cropToPadding="false"
+        android:scaleType="fitXY"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        app:srcCompat="@drawable/niveaux"
+        android:id="@+id/level"
+        android:layout_marginBottom="138dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/temps" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/jouer"
+        android:layout_marginBottom="35dp"
+        android:id="@+id/play"
+        android:layout_above="@+id/level"
+        android:layout_alignStart="@+id/level" />
+
 </RelativeLayout>
