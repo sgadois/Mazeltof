@@ -181,7 +181,7 @@ public class LabyrintheActivity extends AppCompatActivity {
                         //jump counter
                         if(mBallView.isJump()){
                             jumpCount++;
-                            if(jumpCount==100){
+                            if(jumpCount==50){
                                 jumpCount=0;
                                 mBallView.fall();
                                 ToneGenerator toneGen1 = new ToneGenerator(AudioManager.STREAM_RING,ToneGenerator.MAX_VOLUME);
@@ -206,20 +206,21 @@ public class LabyrintheActivity extends AppCompatActivity {
                             mBallPos.y = (mScrHeight - mBallView.r / 2);
                         if (mBallPos.x < mBallView.r / 2) mBallPos.x = mBallView.r / 2;
                         if (mBallPos.y < mBallView.r / 2) mBallPos.y = mBallView.r / 2;*/
-
-                        //if ball touch wall, don't move
-                        for(Wall myWall : labyrinthe.getWall()) {
-                            if (mBallPos.x < min(myWall.getPointD().x, myWall.getPointF().x) +  mBallView.r &&
-                                    mBallPos.x > min(myWall.getPointD().x, myWall.getPointF().x) - mBallView.r &&
-                                    mBallPos.y > min(myWall.getPointD().y, myWall.getPointF().y) &&
-                                    mBallPos.y < max(myWall.getPointD().y, myWall.getPointF().y)) {
-                                mBallPos.x = tempx;
-                            }
-                            if (mBallPos.y < min(myWall.getPointD().y, myWall.getPointF().y) + mBallView.r &&
-                                    mBallPos.y > min(myWall.getPointD().y, myWall.getPointF().y) - mBallView.r &&
-                                    mBallPos.x > min(myWall.getPointD().x, myWall.getPointF().x) &&
-                                    mBallPos.x < max(myWall.getPointD().x, myWall.getPointF().x)) {
-                                mBallPos.y = tempy;
+                        if(!mBallView.isJump()) {
+                            //if ball touch wall, don't move
+                            for (Wall myWall : labyrinthe.getWall()) {
+                                if (mBallPos.x < min(myWall.getPointD().x, myWall.getPointF().x) + mBallView.r &&
+                                        mBallPos.x > min(myWall.getPointD().x, myWall.getPointF().x) - mBallView.r &&
+                                        mBallPos.y > min(myWall.getPointD().y, myWall.getPointF().y) &&
+                                        mBallPos.y < max(myWall.getPointD().y, myWall.getPointF().y)) {
+                                    mBallPos.x = tempx;
+                                }
+                                if (mBallPos.y < min(myWall.getPointD().y, myWall.getPointF().y) + mBallView.r &&
+                                        mBallPos.y > min(myWall.getPointD().y, myWall.getPointF().y) - mBallView.r &&
+                                        mBallPos.x > min(myWall.getPointD().x, myWall.getPointF().x) &&
+                                        mBallPos.x < max(myWall.getPointD().x, myWall.getPointF().x)) {
+                                    mBallPos.y = tempy;
+                                }
                             }
                         }
 
