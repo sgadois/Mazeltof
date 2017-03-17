@@ -1,4 +1,4 @@
-package com.m2dl.mobe.mazeltof;
+package com.m2dl.mobe.mazeltof.Activities;
 
 import android.content.Context;
 import android.content.res.Configuration;
@@ -17,11 +17,12 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 
 import com.m2dl.mobe.mazeltof.Models.Ball;
+import com.m2dl.mobe.mazeltof.R;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class Labyrinthe extends AppCompatActivity {
+public class LabyrintheActivity extends AppCompatActivity {
 
     Ball mBallView = null;
     Handler RedrawHandler = new Handler(); //so redraw occurs in main thread
