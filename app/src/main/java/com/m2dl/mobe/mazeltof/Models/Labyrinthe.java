@@ -131,7 +131,7 @@ public class Labyrinthe extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        for(Wall myWall : getTrumpWall()) {
+        for(Wall myWall : wallResized) {
             canvas.drawLine(myWall.getPointD().x, myWall.getPointD().y, myWall.getPointF().x, myWall.getPointF().y, mPaint);
         }
     }

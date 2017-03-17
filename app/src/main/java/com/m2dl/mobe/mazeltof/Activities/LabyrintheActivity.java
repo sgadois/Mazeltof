@@ -86,8 +86,8 @@ public class LabyrintheActivity extends AppCompatActivity {
         mBallSpd = new android.graphics.PointF();
 
         //create variables for ball position and speed
-        mBallPos.x = mScrWidth/2;
-        mBallPos.y = mScrHeight/2;
+        mBallPos.x = 120;
+        mBallPos.y = 100;
         mBallSpd.x = 0;
         mBallSpd.y = 0;
 
@@ -208,7 +208,7 @@ public class LabyrintheActivity extends AppCompatActivity {
                         if (mBallPos.y < mBallView.r / 2) mBallPos.y = mBallView.r / 2;*/
 
                         //if ball touch wall, don't move
-                        for(Wall myWall : labyrinthe.getTrumpWall()) {
+                        for(Wall myWall : labyrinthe.getWall()) {
                             if (mBallPos.x < min(myWall.getPointD().x, myWall.getPointF().x) +  mBallView.r &&
                                     mBallPos.x > min(myWall.getPointD().x, myWall.getPointF().x) - mBallView.r &&
                                     mBallPos.y > min(myWall.getPointD().y, myWall.getPointF().y) &&
