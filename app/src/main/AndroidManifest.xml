@@ -21,7 +21,8 @@
         <activity
             android:name=".Activities.LevelActivity"
             android:label="Choix du niveau" />
-        <activity android:name=".Preferences.MyPreferenceActivity"></activity>
+        <activity android:name=".Preferences.MyPreferenceActivity" />
+        <activity android:name=".Activities.WinActivity"></activity>
     </application>
 
 </manifest>
