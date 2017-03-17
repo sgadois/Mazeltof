@@ -9,6 +9,9 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.view.View;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 
 /**
  * Created by Blue on 17/03/2017.
@@ -19,7 +22,7 @@ public class Labyrinthe extends View {
     private boolean[][] wall;
     private boolean[][] hole;
 
-    private Wall[] wallResized;
+    private ArrayList<Wall> wallResized;
 
     private PointF depart;
     private PointF fin;
@@ -38,6 +41,7 @@ public class Labyrinthe extends View {
         fin = new PointF();
         depart.set(xDepart,yDepart);
         fin.set(xFin,yFin);
+        wallResized = new ArrayList<>();
     }
 
     public Labyrinthe(Context context, boolean[][] wall, boolean[][] hole){
@@ -47,6 +51,8 @@ public class Labyrinthe extends View {
         this.hole = hole;
         depart= new PointF();
         fin = new PointF();
+        wallResized = new ArrayList<>();
+
     }
 
     public void setDepart(float xDepart,float yDepart){
@@ -74,7 +80,68 @@ public class Labyrinthe extends View {
         Display sizeContainer = activity.getWindowManager().getDefaultDisplay();
         int screenX = sizeContainer.getWidth();
         int screenY = sizeContainer.getHeight();
+        for(int j= 0; j<screenY; j++){
+            boolean debuter = false;
+            PointF debut = new PointF();
+            PointF fin = new PointF();
+            for(int i = 0; i<screenX; i++){
+                if(wall[i][j]){
+                   if(!debuter){
+                       debuter = true;
+                       debut=new PointF();
+                       debut.set(i*screenX/wall.length, j*screenY/wall[j].length);
+                   }
+                    if(debuter && i == screenX-1){
+                        debuter=false;
+                        fin = new PointF();
+                        fin.set(i*screenX/wall.length, j*screenY/wall[j].length);
+                        wallResized.add(new Wall(debut,fin));
+                    }
+                }
+                else{
+                    if(debuter) {
+                        debuter=false;
+                        fin = new PointF();
+                        fin.set((i-1)*screenX/wall.length, j*screenY/wall[j].length);
+                        wallResized.add(new Wall(debut,fin));
+                    }
+                }
+
+            }
+        }
+
+        for(int i= 0; i<screenX; i++){
+            boolean debuter = false;
+            PointF debut = new PointF();
+            PointF fin = new PointF();
+            for(int j = 0; j<screenY; j++){
+                if(wall[i][j]){
+                    if(!debuter){
+                        debuter = true;
+                        debut=new PointF();
+                        debut.set(i*screenX/wall.length, j*screenY/wall[j].length);
+                    }
+                    if(debuter && j == screenY-1){
+                        debuter=false;
+                        fin = new PointF();
+                        fin.set(i*screenX/wall.length, j*screenY/wall[j].length);
+                        wallResized.add(new Wall(debut,fin));
+                    }
+                }
+                else{
+                    if(debuter) {
+                        debuter=false;
+                        fin = new PointF();
+                        fin.set((i-1)*screenX/wall.length, j*screenY/wall[j].length);
+                        wallResized.add(new Wall(debut,fin));
+                    }
+                }
+
+            }
+        }
     }
+
+
 
     @Override
     protected void onDraw(Canvas canvas) {
