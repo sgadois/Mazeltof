@@ -13,7 +13,8 @@
         android:id="@+id/level"
         android:textSize="24sp"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:textStyle="bold" />
 
     <TextView
         android:text="Best"
@@ -22,7 +23,8 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:id="@+id/best_time"
-        android:textSize="24sp" />
+        android:textSize="24sp"
+        android:textStyle="bold" />
 
     <TextView
         android:text="0:0"
@@ -32,7 +34,17 @@
         android:textSize="24sp"
         android:layout_centerInParent="false"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/best_time"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/data_best_time"
+        android:textSize="24sp"
+        android:textStyle="bold" />
 
 
 </RelativeLayout>
