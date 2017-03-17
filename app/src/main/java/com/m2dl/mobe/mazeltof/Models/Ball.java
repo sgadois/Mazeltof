@@ -13,7 +13,8 @@ public class Ball extends View {
 
     public float x;
     public float y;
-    public final int r;
+    public int r;
+    private boolean jump;
     private final Paint mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
     //construct new ball object
@@ -24,6 +25,7 @@ public class Ball extends View {
         this.x = x;
         this.y = y;
         this.r = r;  //radius
+        this.jump = false;
     }
 
     //called by invalidate()
@@ -31,5 +33,23 @@ public class Ball extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         canvas.drawCircle(x, y, r, mPaint);
+    }
+
+    public void jump(){
+        if(!jump){
+            jump=true;
+            this.r = this.r*2;
+        }
+    }
+
+    public void fall(){
+        if(jump){
+            jump= false;
+            this.r = this.r/2;
+        }
+    }
+
+    public boolean isJump(){
+        return this.jump;
     }
 }

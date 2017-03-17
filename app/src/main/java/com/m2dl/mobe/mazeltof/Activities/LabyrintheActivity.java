@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -224,6 +225,11 @@ public class LabyrintheActivity extends AppCompatActivity {
 
     public void win(){
 
+    }
+
+    public boolean onTouchEvent(MotionEvent event){
+        this.mBallView.jump();
+        return false;
     }
 
 }
