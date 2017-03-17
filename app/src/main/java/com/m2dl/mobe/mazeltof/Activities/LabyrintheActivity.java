@@ -23,8 +23,6 @@ import com.m2dl.mobe.mazeltof.R;
 
 import java.util.Timer;
 import java.util.TimerTask;
-import android.graphics.Canvas;
-import android.graphics.Paint;
 
 public class LabyrintheActivity extends AppCompatActivity {
 
@@ -37,7 +35,11 @@ public class LabyrintheActivity extends AppCompatActivity {
     private Labyrinthe labyrinthe;
     private int level;
 
-    private int time;
+    private int millisecond;
+    private int centieme;
+    private int second;
+    private int minute;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +52,10 @@ public class LabyrintheActivity extends AppCompatActivity {
         setContentView(R.layout.layout_test_ball);
 
 
-        time = 0;
+        millisecond = 0;
+        centieme = 0;
+        second = 0;
+        minute = 0;
 
         level = 1; //TEMPORAIRE /!\
         switch(level){
@@ -82,6 +87,8 @@ public class LabyrintheActivity extends AppCompatActivity {
         mBallView = new Ball(this, mBallPos.x, mBallPos.y, 20);
 
         mainView.addView(mBallView); //add ball to main screen
+        mainView.addView(labyrinthe);
+        labyrinthe.invalidate();
         mBallView.invalidate(); //call onDraw in BallView
 
         //listener for accelerometer, use anonymous class for simplicity
@@ -149,9 +156,22 @@ public class LabyrintheActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     public void run() {
                         //update time
-                        time += 10;
+                        millisecond += 10;
+                        if(millisecond == 10) {
+                            centieme += 1;
+                            millisecond = 0;
+                        }
+                        if(centieme == 100) {
+                            second += 1;
+                            centieme = 0;
+                        }
+                        if(second == 60) {
+                            minute += 1;
+                            second = 0;
+                        }
+
                         TextView timer = (TextView) findViewById(R.id.time);
-                        timer.setText("" + time);
+                        timer.setText(String.format("%02d", minute) + ":" + String.format("%02d", second) + ":" + String.format("%02d", centieme));
 
                         //move ball based on current speed
                         mBallPos.x += mBallSpd.x;
