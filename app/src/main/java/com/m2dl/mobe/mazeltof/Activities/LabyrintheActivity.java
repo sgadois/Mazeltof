@@ -20,6 +20,11 @@ import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.m2dl.mobe.mazeltof.Models.Ball;
 import com.m2dl.mobe.mazeltof.Models.Labyrinthe;
 import com.m2dl.mobe.mazeltof.Models.Wall;
@@ -43,10 +48,13 @@ public class LabyrintheActivity extends AppCompatActivity {
     private Labyrinthe labyrinthe;
     private int level;
 
+    private Long totalMillisecond;
     private int millisecond;
     private int centieme;
     private int second;
     private int minute;
+
+    private Long currentTopScore;
 
 
     @Override
@@ -59,7 +67,8 @@ public class LabyrintheActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_test_ball);
 
-
+        totalMillisecond = 0L;
+        currentTopScore = 0L;
         millisecond = 0;
         centieme = 0;
         second = 0;
@@ -116,15 +125,20 @@ public class LabyrintheActivity extends AppCompatActivity {
                         .getSensorList(Sensor.TYPE_ACCELEROMETER).get(0),
                 SensorManager.SENSOR_DELAY_NORMAL);
 
-        //listener for touch event
-        /*mainView.setOnTouchListener(new android.view.View.OnTouchListener() {
-            public boolean onTouch(android.view.View v, android.view.MotionEvent e) {
-                //set ball position based on screen touch
-                mBallPos.x = e.getX();
-                mBallPos.y = e.getY();
-                //timer event will redraw ball
-                return true;
-            }});*/
+        final DatabaseReference database = FirebaseDatabase.getInstance().getReference("level1");
+        ValueEventListener postListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                TextView bestTime = (TextView) findViewById(R.id.data_best_time);
+                bestTime.setText(dataSnapshot.child("top_time").getValue().toString());
+                currentTopScore = (Long) dataSnapshot.child("top_time_millisecond").getValue();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        };
+        database.addListenerForSingleValueEvent(postListener);
     }
 
     //listener for menu button on phone
