@@ -27,9 +27,17 @@ public class Wall {
         return PointF;
     }
 
-    public Wall(float xDepart, float yDepart, float xFin, float yFin){
+    /*public Wall(float xDepart, float yDepart, float xFin, float yFin){
         this.PointD.set(xDepart,yDepart);
         this.PointF.set(xFin,yFin);
 
+    }*/
+
+    public Wall(){
+
+    }
+    public Wall(PointF deb, PointF fin){
+        this.PointF=fin;
+        this.PointD=deb;
     }
 }
