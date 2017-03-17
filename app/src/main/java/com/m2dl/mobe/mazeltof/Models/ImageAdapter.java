@@ -52,6 +52,6 @@ public class ImageAdapter extends BaseAdapter {
 
     // references to our images
     private Integer[] mThumbIds = {
-            R.drawable.jouer, R.drawable.niveaux
+             R.drawable.niveau1
     };
 }
