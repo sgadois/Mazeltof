@@ -55,7 +55,6 @@ public class LabyrintheActivity extends AppCompatActivity {
     private int centieme;
     private int second;
     private int minute;
-    private MediaPlayer mediaPlayer;
 
     private Long currentTopScore;
 
@@ -69,8 +68,7 @@ public class LabyrintheActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_test_ball);;
-        mediaPlayer = MediaPlayer.create(this, R.raw.expert);
-        mediaPlayer.start();
+
         totalMillisecond = 0L;
         currentTopScore = 0L;
         millisecond = 0;
@@ -303,7 +301,6 @@ public class LabyrintheActivity extends AppCompatActivity {
 
     public void isWin(){
         if(mBallPos.x>= mScrWidth || mBallPos.y >= mScrHeight){
-            mediaPlayer.stop();
             startActivity(new Intent(this, WinActivity.class));
             if(totalMillisecond < currentTopScore) {
                 DatabaseReference database = FirebaseDatabase.getInstance().getReference("level1");
