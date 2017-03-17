@@ -57,7 +57,6 @@ public class LabyrintheActivity extends AppCompatActivity {
 
     private Long currentTopScore;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
