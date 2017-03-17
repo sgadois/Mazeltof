@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="level1">
+    <string-array name="hole1">
         <item>0000000000</item>
         <item>0000010000</item>
         <item>0000000000</item>
@@ -14,7 +14,7 @@
         <item>0000000000</item>
         <item>0000000000</item>
     </string-array>
-    <string-array name="level2">
+    <string-array name="hole2">
 
     </string-array>
 </resources>

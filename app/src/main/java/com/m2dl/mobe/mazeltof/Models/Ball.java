@@ -13,7 +13,7 @@ public class Ball extends View {
 
     public float x;
     public float y;
-    private final int r;
+    public final int r;
     private final Paint mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
     //construct new ball object

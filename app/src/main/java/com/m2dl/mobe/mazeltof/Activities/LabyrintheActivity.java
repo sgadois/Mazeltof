@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 
 import com.m2dl.mobe.mazeltof.Models.Ball;
 import com.m2dl.mobe.mazeltof.Models.Labyrinthe;
@@ -47,9 +48,18 @@ public class LabyrintheActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_test_ball);
 
+        level = 1; //TEMPORAIRE /!\
+        switch(level){
+            case 1 :
+                readLabyrinth(R.array.level1,R.array.hole1);
+                break;
+            default:
+                break;
+        }
+
         //create pointer to main screen
-        final FrameLayout mainView =
-                (android.widget.FrameLayout)findViewById(R.id.main_view);
+        final RelativeLayout mainView =
+                (android.widget.RelativeLayout)findViewById(R.id.main_view);
 
         //get screen dimensions
         Display display = getWindowManager().getDefaultDisplay();
@@ -133,15 +143,16 @@ public class LabyrintheActivity extends AppCompatActivity {
         mTmr = new Timer();
         mTsk = new TimerTask() {
             public void run() {
+
                 //move ball based on current speed
                 mBallPos.x += mBallSpd.x;
                 mBallPos.y += mBallSpd.y;
 
-                //if ball goes off screen, reposition to opposite side of screen
-                if (mBallPos.x > mScrWidth) mBallPos.x=0;
-                if (mBallPos.y > mScrHeight) mBallPos.y=0;
-                if (mBallPos.x < 0) mBallPos.x=mScrWidth;
-                if (mBallPos.y < 0) mBallPos.y=mScrHeight;
+                //if ball is on border, don't move
+                if (mBallPos.x > (mScrWidth - mBallView.r/2)) mBallPos.x=(mScrWidth - mBallView.r/2);
+                if (mBallPos.y > (mScrHeight - mBallView.r/2)) mBallPos.y=(mScrHeight - mBallView.r/2);
+                if (mBallPos.x < mBallView.r/2) mBallPos.x=mBallView.r/2;
+                if (mBallPos.y < mBallView.r/2) mBallPos.y=mBallView.r/2;
 
                 //update ball class instance
                 mBallView.x = mBallPos.x;
@@ -176,10 +187,25 @@ public class LabyrintheActivity extends AppCompatActivity {
         super.onConfigurationChanged(newConfig);
     }
 
-    private void readLabyrinth(int resId) {
+    private void readLabyrinth(int lvlId,int holeId) {
         Resources res = this.getResources();
-        String[] labyrinthRows = res.getStringArray(resId);
-        labyrinthe = new Labyrinthe();
+        String[] labyrinthRows = res.getStringArray(lvlId);
+        String[] holeRows = res.getStringArray(holeId);
+
+        boolean[][] labyrintheArray = new boolean[labyrinthRows[1].length()][labyrinthRows.length];
+        boolean[][] holeArray = new boolean[holeRows[1].length()][holeRows.length];
+        for(int i = 0; i<labyrinthRows.length;i++){
+            for(int j = 0; j<labyrinthRows[i].length();j++){
+                labyrintheArray[i][j] = Character.getNumericValue(labyrinthRows[i].charAt(j)) > 0?true:false;
+            }
+        }
+
+        for(int i = 0; i<holeRows.length;i++){
+            for(int j = 0; j<holeRows[i].length();j++){
+                holeArray[i][j] = Character.getNumericValue(holeRows[i].charAt(j)) > 0?true:false;
+            }
+        }
+        labyrinthe = new Labyrinthe(labyrintheArray,holeArray);
     }
 
     public void win(){
