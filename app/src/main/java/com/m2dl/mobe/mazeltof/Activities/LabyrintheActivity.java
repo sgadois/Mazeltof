@@ -28,6 +28,9 @@ import com.m2dl.mobe.mazeltof.R;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import static java.lang.Math.max;
+import static java.lang.Math.min;
+
 public class LabyrintheActivity extends AppCompatActivity {
 
     private Ball mBallView = null;
@@ -205,15 +208,17 @@ public class LabyrintheActivity extends AppCompatActivity {
                         if (mBallPos.y < mBallView.r / 2) mBallPos.y = mBallView.r / 2;*/
 
                         //if ball touch wall, don't move
-                        for(Wall myWall : labyrinthe.getWall()) {
-                            if (mBallPos.x == myWall.getPointD().x &&
-                                    mBallPos.y > myWall.getPointD().y &&
-                                    mBallPos.y > myWall.getPointF().y) {
+                        for(Wall myWall : labyrinthe.getTrumpWall()) {
+                            if (mBallPos.x < min(myWall.getPointD().x, myWall.getPointF().x) +  mBallView.r &&
+                                    mBallPos.x > min(myWall.getPointD().x, myWall.getPointF().x) - mBallView.r &&
+                                    mBallPos.y > min(myWall.getPointD().y, myWall.getPointF().y) &&
+                                    mBallPos.y < max(myWall.getPointD().y, myWall.getPointF().y)) {
                                 mBallPos.x = tempx;
                             }
-                            if (mBallPos.y == myWall.getPointD().y &&
-                                    mBallPos.x > myWall.getPointD().x &&
-                                    mBallPos.x > myWall.getPointF().x) {
+                            if (mBallPos.y < min(myWall.getPointD().y, myWall.getPointF().y) + mBallView.r &&
+                                    mBallPos.y > min(myWall.getPointD().y, myWall.getPointF().y) - mBallView.r &&
+                                    mBallPos.x > min(myWall.getPointD().x, myWall.getPointF().x) &&
+                                    mBallPos.x < max(myWall.getPointD().x, myWall.getPointF().x)) {
                                 mBallPos.y = tempy;
                             }
                         }
